@@ -1,4 +1,4 @@
-@import "./variables";
+@use "./variables" as *;
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap");
 
 * {
@@ -13,6 +13,7 @@ body {
   background-attachment: fixed;
   color: $text-primary;
   height: 100vh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -22,6 +23,7 @@ body {
 #root {
   width: 100%;
   height: 100%;
+  max-height: 100dvh;
   max-width: 1000px;
   padding: 20px;
   display: flex;
@@ -40,12 +42,24 @@ body {
 }
 
 .chat-header {
-  padding: 20px 30px;
+  padding: 15px 30px 5px 30px;
   border-bottom: 1px solid $glass-border;
   background: rgba(255, 255, 255, 0.03);
 
+  .header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .chat-logo {
+      width: 80px;
+      height: 80px;
+      object-fit: cover;
+    }
+  }
+
   h1 {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: 600;
     background: linear-gradient(to right, #fff, $accent);
     -webkit-background-clip: text;

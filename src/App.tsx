@@ -63,7 +63,10 @@ function App() {
   return (
     <div className="chat-container">
       <header className="chat-header">
-        <h1>Chat with Raf AI</h1>
+        <div className="header-content">
+          <img src="/logo.png" alt="Raf AI Logo" className="chat-logo" />
+          <h1>Chat with Raf AI</h1>
+        </div>
       </header>
 
       <main className="messages-list">
