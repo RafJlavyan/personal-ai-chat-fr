@@ -42,9 +42,14 @@ body {
 }
 
 .chat-header {
-  padding: 15px 30px 5px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px 10px 30px;
   border-bottom: 1px solid $glass-border;
   background: rgba(255, 255, 255, 0.03);
+  position: relative;
+  z-index: 10;
 
   .header-content {
     display: flex;
@@ -52,19 +57,69 @@ body {
     gap: 15px;
 
     .chat-logo {
-      width: 80px;
-      height: 80px;
+      width: 50px;
+      height: 50px;
       object-fit: cover;
+      border-radius: 12px;
     }
   }
 
   h1 {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     font-weight: 600;
     background: linear-gradient(to right, #fff, $accent);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
+  }
+
+  .new-chat-btn {
+    background: $glass-bg;
+    border: 1px solid $glass-border;
+    border-radius: 12px;
+    padding: 8px;
+    cursor: pointer;
+    transition: $transition-smooth;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(5px);
+
+    img {
+      width: 15px;
+      height: 15px;
+      opacity: 0.8;
+      transition: $transition-smooth;
+      filter: invert(1);
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-2px);
+      border-color: rgba($accent, 0.5);
+
+      img {
+        opacity: 1;
+        transform: rotate(15deg);
+      }
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes dissolveOut {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95);
+    filter: blur(8px);
   }
 }
 
@@ -76,6 +131,11 @@ body {
   flex-direction: column;
   gap: 16px;
   scroll-behavior: smooth;
+  transition: opacity 0.5s ease;
+
+  .chat-container.refreshing & {
+    animation: dissolveOut 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
 
   /* Custom Scrollbar */
   &::-webkit-scrollbar {

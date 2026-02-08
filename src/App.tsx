@@ -18,6 +18,7 @@ function App() {
     return saved ? JSON.parse(saved) : [];
   });
   const [isTyping, setIsTyping] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -38,6 +39,7 @@ function App() {
     };
 
     setMessages((prev) => [...prev, userMsg]);
+    setIsRefreshing(false); // Reset refreshing if new message sent
     setIsTyping(true);
 
     try {
@@ -60,13 +62,32 @@ function App() {
     }
   };
 
+  const handleNewChat = () => {
+    setIsRefreshing(true);
+    setTimeout(() => {
+      localStorage.removeItem("chat_messages");
+      setMessages([]);
+      setTimeout(() => {
+        setIsRefreshing(false);
+      }, 500);
+    }, 300);
+  };
+
   return (
-    <div className="chat-container">
+    <div className={`chat-container ${isRefreshing ? "refreshing" : ""}`}>
       <header className="chat-header">
         <div className="header-content">
           <img src="/logo.png" alt="Raf AI Logo" className="chat-logo" />
           <h1>Chat with Raf AI</h1>
         </div>
+        <button
+          className="new-chat-btn"
+          onClick={handleNewChat}
+          title="Start New Chat"
+          aria-label="New Chat"
+        >
+          <img src="/src/assets/open-in-new.svg" alt="New Chat" />
+        </button>
       </header>
 
       <main className="messages-list">
@@ -79,7 +100,7 @@ function App() {
         <div ref={messagesEndRef} />
       </main>
 
-      <ChatInput onSend={handleSend} disabled={isTyping} />
+      <ChatInput onSend={handleSend} disabled={isTyping || isRefreshing} />
     </div>
   );
 }
