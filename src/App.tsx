@@ -86,7 +86,7 @@ function App() {
           title="Start New Chat"
           aria-label="New Chat"
         >
-          <img src="/src/assets/open-in-new.svg" alt="New Chat" />
+          <img src="/open-in-new.svg" alt="New Chat" />
         </button>
       </header>
 
